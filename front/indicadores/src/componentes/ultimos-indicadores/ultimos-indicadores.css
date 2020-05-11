@@ -1,3 +1,29 @@
 .ancho-maximo {
-    width: 100%;
+  width: 100%;
+}
+
+#page-numbers {
+  list-style: none;
+  display: flex;
+}
+
+#page-numbers > li {
+  color: blue;
+  user-select: none;
+  cursor: pointer;
+  border: solid 1px #417698;
+  padding: 0.3em;
+}
+
+.pagina-activa {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+.pagina-inactiva {
+  color: blue;
+  user-select: none;
+  cursor: pointer;
+  border: solid 1px #417698;
+  padding: 0.3em;
 }
