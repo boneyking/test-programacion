@@ -1,16 +1,19 @@
 import React from 'react';
 import './App.css';
-import UltimosIndicadores from './ultimos-indicadores/ultimos-indicadores';
-import PorIndicador from './por-indicador/por-indicador';
-import IndicadorFecha from './indicador-fecha/indicador-fecha';
+import Indice from './componentes/indice';
 
 function App() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <UltimosIndicadores></UltimosIndicadores>
-        <PorIndicador></PorIndicador>
-        <IndicadorFecha></IndicadorFecha>
+        <h1> Indicadores </h1>
+      </div>
+      <div className="row">
+        <div className="container">
+          <div className="row">
+            <Indice></Indice>
+          </div>
+        </div>
       </div>
     </div>
   );
