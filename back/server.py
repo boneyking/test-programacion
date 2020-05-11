@@ -1,13 +1,15 @@
 from flask import Flask, request
 import requests
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 URL_ULTIMOS_INDICADORES = 'https://www.indecon.online/last'
 URL_POR_TIPO_INDICADOR = 'https://www.indecon.online/values/{}'
 URL_POR_FECHA_E_INDICADOR = 'https://www.indecon.online/date/{}/{}'
 
-@app.route("/", methods=['GET'])
+@app.route("/api/ultimosIndicadores", methods=['GET'])
 def obtenerUltimosIndicadores():
     respuesta = requests.get(url=URL_ULTIMOS_INDICADORES)
     if respuesta.status_code != 200:
@@ -15,7 +17,7 @@ def obtenerUltimosIndicadores():
     return respuesta.json()
 
 
-@app.route("/indicador/<nombre_indicador>", methods=['GET'])
+@app.route("/api/indicador/<nombre_indicador>", methods=['GET'])
 def obtenerIndicador(nombre_indicador):
     if request.args.get('fecha'):
         print("tiene fecha")
