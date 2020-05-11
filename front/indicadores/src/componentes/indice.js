@@ -4,15 +4,25 @@ import PorIndicador from "./por-indicador/por-indicador";
 import IndicadorFecha from "./indicador-fecha/indicador-fecha";
 
 class Indice extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            llave: undefined
+        };
+    }
+
     handlePorIndicador = async (parametro) => {
-        console.log(parametro);
+        this.setState({llave: parametro});
     };
 
     render(){
         return (
             <>
                 <UltimosIndicadores handlePorIndicador={this.handlePorIndicador}></UltimosIndicadores>
-                <PorIndicador handlePorIndicador={this.handlePorIndicador}></PorIndicador>
+                {
+                    this.state.llave !== undefined && 
+                    <PorIndicador llaveIndicador={this.state.llave}></PorIndicador>
+                }                
                 <IndicadorFecha></IndicadorFecha>
             </>
         );

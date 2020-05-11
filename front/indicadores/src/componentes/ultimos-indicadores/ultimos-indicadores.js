@@ -11,13 +11,12 @@ class UltimosIndicadores extends React.Component {
         this.state = {
             seCargaronIndicadores: false,
             mensaje: '',
-            indicadores: []
+            indicadores: [],
+            llave: ''
         };
     }
 
-    handlePorIndicador = (parametro) => {
-        console.log(parametro);
-    }
+
 
     tipoUnidad(tipo, valor){
         let tipoMoneda = <CurrencyFormat value={valor} displayType={'text'} thousandSeparator={true} prefix={'$ '} />;
@@ -57,14 +56,16 @@ class UltimosIndicadores extends React.Component {
                 this.setState({
                     seCargaronIndicadores: true,
                     mensaje: 'Se cargaron Indicadores',
-                    indicadores: listadoIndicadores
+                    indicadores: listadoIndicadores,
+                    llave: ''
                 });
             },
             () => {
                 this.setState({
                     seCargaronIndicadores: true,
                     mensaje: 'No se cargaron los Indicadores',
-                    indicadores: []
+                    indicadores: [],
+                    llave: ''
                 })
             });
     }    
