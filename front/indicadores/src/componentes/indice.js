@@ -7,7 +7,8 @@ class Indice extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            llave: undefined
+            llave: undefined,
+            fechaSeleccionada: undefined
         };
     }
 
@@ -15,15 +16,27 @@ class Indice extends React.Component {
         this.setState({llave: parametro});
     };
 
+    handlePorFecha = async (parametro) => {
+        console.log('sasas', parametro);
+        this.setState({fechaSeleccionada: parametro});
+    };
+
     render(){
         return (
             <>
                 <UltimosIndicadores handlePorIndicador={this.handlePorIndicador}></UltimosIndicadores>
-                {
-                    this.state.llave !== undefined && 
-                    <PorIndicador llaveIndicador={this.state.llave}></PorIndicador>
-                }                
-                <IndicadorFecha></IndicadorFecha>
+                <div className="col-sm-12 col-lg-8 col-xl-8">
+                    <div className="row">
+                    {
+                        this.state.llave !== undefined &&
+                        <PorIndicador llaveIndicador={this.state.llave} handlePorFecha={this.handlePorFecha}></PorIndicador>
+                    }                
+                    {
+                        this.state.fechaSeleccionada !== undefined &&
+                        <IndicadorFecha fechaSeleccionada={this.state.fechaSeleccionada}></IndicadorFecha>
+                    }
+                    </div>
+                </div>
             </>
         );
         

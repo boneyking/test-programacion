@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Moment from 'moment';
 import './ultimos-indicadores.css';
 import CurrencyFormat from 'react-currency-format';
@@ -14,7 +14,8 @@ class UltimosIndicadores extends React.Component {
             indicadores: [],
             llave: '',
             paginaActual: 1,
-            cantidadPorPagina: 2
+            cantidadPorPagina: 2,
+            fechaSeleccionada: ''
         };
         this.handleAvanzar = this.handleAvanzar.bind(this);
 
@@ -91,7 +92,6 @@ class UltimosIndicadores extends React.Component {
     render() {
         const {handlePorIndicador} = this.props;
 
-
         if (this.state.seCargaronIndicadores) {
             if (this.state.indicadores.length > 0) {
                 const indicePagina = this.state.paginaActual * this.state.cantidadPorPagina;
@@ -107,8 +107,8 @@ class UltimosIndicadores extends React.Component {
                             <p className="card-text">
                                 {this.tipoUnidad(indicador.unidad, indicador.valor)}
                             </p>
-                            <button type="button" className="btn btn-primary" 
-                                onClick={() => handlePorIndicador(indicador.llave)}>Go somewhere</button>
+                            <button type="button" className="btn btn-outline-primary btn-sm" 
+                                onClick={() => handlePorIndicador(indicador.llave)}>Ver gráfico</button>
                         </div>
                     </div>
                 </li>
@@ -169,34 +169,6 @@ class UltimosIndicadores extends React.Component {
             
         }
         return 'Cargando últimos indicadores';
-        
-
-        // if (this.state.seCargaronIndicadores) {
-        //     return (
-        //         <div className="col-sm-12 col-lg-4 col-xl-4">
-        //             <ul className="list-group">
-        //                 <li className="list-group-item d-flex justify-content-between align-items-center"><h3>Últimos Indicadores</h3></li>
-        //                 {this.state.indicadores.map(indicador => 
-        //                     <li key={indicador.llave} className="list-group-item d-flex justify-content-between align-items-center">
-        //                         <div className="card ancho-maximo">
-        //                             <h5 className="card-header">{indicador.nombre.toUpperCase()} <span className="float-right">{Moment(indicador.fecha).format('DD-MM-yyyy')}</span> </h5>
-        //                             <div className="card-body">
-        //                                 <h6 className="card-title">{indicador.descripcion}</h6>
-        //                                 <p className="card-text">
-        //                                     {this.tipoUnidad(indicador.unidad, indicador.valor)}
-        //                                 </p>
-        //                                 <button type="button" className="btn btn-primary" 
-        //                                     onClick={() => handlePorIndicador(indicador.llave)}>Go somewhere</button>
-        //                             </div>
-        //                         </div>
-        //                     </li>
-        //                 )}
-        //             </ul>
-        //         </div>
-        //     );
-        // } else {
-        //     return 'Cargando últimos indicadores';
-        // }        
     }
 }
 

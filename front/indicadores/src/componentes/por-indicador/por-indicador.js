@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Moment from 'moment';
-import { Chart } from 'react-charts';
+import {
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  } from 'recharts';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 export class PorIndicador extends React.Component {
     constructor(props){
@@ -10,59 +18,99 @@ export class PorIndicador extends React.Component {
             llave: '',
             nombre: '',
             unidad: '',
-            valores: []            
+            valores: [],
+            llaveAnterior: '',
+            fechaSeleccionada: ''         
         };
     }
 
-    obtenerIndicadorPorTipo() {
-        Moment.locale('es');
-        fetch('http://localhost:5000/api/indicador/cobre')
-            .then(response => response.json())
-            .then(indicadores => {
-                let listadoValores = [];
-                Object.keys(indicadores.values).forEach(fecha => {
-                    listadoValores.push({
-                        fecha: Moment(fecha).format('DD-MM-yyyy'),
-                        valor: indicadores.values[fecha]
-                    });
-                });
-
-                this.setState({
-                    llave: indicadores.key,
-                    nombre: indicadores.name,
-                    unidad: indicadores.unit,
-                    valores: listadoValores
-                });
-            },
-            () => {
-                this.setState({
-                    llave: '',
-                    nombre: '',
-                    unidad: '',
-                    valores: [] 
-                });
-            });
+    componentDidMount() {
+        this.obtenerIndicadorPorTipo();
     }
 
-
+    obtenerIndicadorPorTipo() {
+        if (this.props.llaveIndicador !== '') {
+            Moment.locale('es');
+            fetch('http://localhost:5000/api/indicador/' + this.props.llaveIndicador)
+                .then(response => response.json())
+                .then(indicadores => {
+                    let listadoValores = [];
+                    Object.keys(indicadores.values).forEach(fecha => {
+                        listadoValores.push({
+                            fecha: Moment(Number(fecha)).format('DD-MM-yyyy'),
+                            valor: indicadores.values[fecha]
+                        });
+                    });
+    
+                    this.setState({
+                        llave: indicadores.key,
+                        nombre: indicadores.name,
+                        unidad: indicadores.unit,
+                        valores: listadoValores,
+                        llaveAnterior: this.props.llaveIndicador,
+                        fechaSeleccionada: ''
+                    });
+                },
+                () => {
+                    this.setState({
+                        llave: '',
+                        nombre: '',
+                        unidad: '',
+                        valores: [],
+                        llaveAnterior: this.props.llaveIndicador,
+                        fechaSeleccionada: ''
+                    });
+                });
+        }
+        
+    }
 
     render() {
+        const {handlePorFecha} = this.props;
+        
+        if ((this.state.llaveAnterior !== undefined && this.state.llaveAnterior !== '') && this.state.llaveAnterior !== this.props.llaveIndicador){
+            this.obtenerIndicadorPorTipo();
+        }
 
         if(this.props.llaveIndicador === ''){
-            return (<div className="col-sm-12 col-lg-4 col-xl-4"></div>);
+            this.setState({llave: '', valores: ''});
+            return (<div className="col-sm-12 col-lg-12 col-xl-12"></div>);
         } else {
-            this.obtenerIndicadorPorTipo();
-            return (
-                <div className="col-sm-12 col-lg-4 col-xl-4">
-                    <h1>{this.props.llaveIndicador}</h1>
-                    <>
-                    
-                    
-                                                  
-                    </>
-                    
-                </div>
-            );
+            if(this.state.llave !== ''){
+                return (
+                    <div className="col-sm-12 col-lg-12 col-xl-12">
+                        <h1>{this.props.llaveIndicador}</h1>
+                        <div className="row">
+                            <LineChart
+                                width={500}
+                                height={300}
+                                data={this.state.valores}
+                                margin={{
+                                top: 5, right: 30, left: 20, bottom: 5,
+                                }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="fecha" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="valor" stroke="#8884d8" activeDot={{ r: 8 }} />
+                            </LineChart>
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
+                            <DatePicker 
+                                selected={this.state.fechaSeleccionada}
+                                onChange={(date) => handlePorFecha(Moment(date).format('DD-MM-yyyy'))}
+                                dateFormat="dd-MM-yyyy"
+                                maxDate={new Date()} />
+                            </div>
+                        </div>
+                    </div>
+                );
+            } else {
+                return (<div className="col-sm-12 col-lg-4 col-xl-4">Cargando...</div>);
+            }            
         }        
     }
 }
