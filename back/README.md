@@ -3,3 +3,4 @@
 - Abrir una consola, escribir esta línea:
     - pip install --upgrade -r requirements.txt . Con esto se instalan las dependencias a utilizar en proyecto.
     - server.py runserver . Con esto levantamos el servidor de python.
+    - Abrir el navegador a elección y colocar la siguiente ruta: http://localhost:5000/api/ultimosIndicadores
