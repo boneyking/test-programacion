@@ -6,6 +6,7 @@ class TestEstadoRespuesta(unittest.TestCase):
         fecha = input('Indique una fecha:')
         respuesta = requests.get(url='http://localhost:5001/api/indicador/cobre?fecha='+ fecha)
         if respuesta.status_code == 200:
+            print(respuesta.text)
             assert True
         elif respuesta.status_code == 400:
             print(respuesta.text)
