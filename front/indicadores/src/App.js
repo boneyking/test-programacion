@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Indice from './componentes/indice';
+import Indicadores from './indicadores';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <div className="row">
         <div className="container">
           <div className="row">
-            <Indice></Indice>
+            <Indicadores></Indicadores>
           </div>
         </div>
       </div>
