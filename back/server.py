@@ -29,8 +29,10 @@ def obtenerIndicador(nombre_indicador):
         return "Error en obtener indicador seleccionado", 500
     if respuesta.status_code == 200:
         data = respuesta.json()
-        if data["value"] == None:
-            return "No hay valores", 400
+        if request.args.get('fecha'):
+            if data["value"] == None:
+                return "No hay valores para la fecha indicada", 400
+        
     if not respuesta.json():
         return "No existe información para el indicador seleccionado", 500
     return respuesta.json()

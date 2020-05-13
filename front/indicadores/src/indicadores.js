@@ -82,7 +82,7 @@ class Indicadores extends React.Component {
                         seCargaronIndicadores: true,
                         ultimosIndicadores: {
                             indicadores: listadoIndicadores,
-                            mensajeUltimosIndicadores: 'Últimos Indicadores',
+                            mensajeUltimosIndicadores: 'Ultimos Indicadores',
                             cantidadPorPagina: 2,
                         }
                     });
@@ -134,7 +134,7 @@ class Indicadores extends React.Component {
                             porIndicador: {
                                 llaveSeleccionada: this.state.porIndicador.llaveSeleccionada,
                                 valores: listadoValores,
-                                mensajePorIndicador: 'No hay data para gráfico.'
+                                mensajePorIndicador: 'No hay data para grafico.'
                             },
                         });
                     }
@@ -288,7 +288,7 @@ class Indicadores extends React.Component {
                         {this.tipoUnidad(indicador.unidad, indicador.valor)}
                     </p>
                     <button type="button" className="btn btn-outline-primary btn-sm" 
-                        onClick={() => this.clicIndicador(indicador.llave)}>Ver gráfico</button>
+                        onClick={() => this.clicIndicador(indicador.llave)}>Ver grafico</button>
                 </div>
             </div>
         </li>
@@ -371,7 +371,7 @@ class Indicadores extends React.Component {
             <div className="col-sm-12 col-lg-12 col-xl-12">
                 {
                     !this.state.seCargoDataGrafico &&
-                    <span>Cargando gráfico...</span>
+                    <span>Cargando grafico...</span>
                 }
 
                 {
@@ -404,7 +404,7 @@ class Indicadores extends React.Component {
             return (
                 <div className="col-sm-12 col-lg-12 col-xl-12">
                     <div className="alert alert-warning">
-                        No existe información para el {this.state.detalleIndicador.fechaSeleccionada}
+                        No existe informacion para el {this.state.detalleIndicador.fechaSeleccionada}
                     </div>                    
                 </div>
                 );
