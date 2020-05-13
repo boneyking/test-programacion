@@ -8,9 +8,9 @@ class TestEstadoRespuesta(unittest.TestCase):
         if respuesta.status_code == 200:
             print(respuesta.text)
             assert True
-        elif respuesta.status_code == 400:
+        elif respuesta.status_code == 404:
             print(respuesta.text)
-            assert respuesta.status_code == 400
+            assert respuesta.status_code == 404
         elif respuesta.status_code == 500:
             print(respuesta.text)
             assert respuesta.status_code == 500

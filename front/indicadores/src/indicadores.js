@@ -178,7 +178,7 @@ class Indicadores extends React.Component {
                 },
                 (error) => {
                     this.setState({
-                        seCargoDetalle: false,
+                        seCargoDetalle: true,
                         detalleIndicador: {
                             fechaSeleccionada: this.state.detalleIndicador.fechaSeleccionada,
                             indicador: {
@@ -188,7 +188,7 @@ class Indicadores extends React.Component {
                                 descripcion: '',
                                 unidad: '',
                                 valor: '',
-                                mensajeDetalle: error
+                                mensajeDetalle: 'Error al buscar por fecha'
                             }
                         }
                     })
