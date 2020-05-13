@@ -62,7 +62,7 @@ class Indicadores extends React.Component {
 
     obtenerUltimosIndicadores() {
         Moment.locale('es');
-        fetch('http://localhost:5000/api/ultimosIndicadores')
+        fetch('http://localhost:5001/api/ultimosIndicadores')
             .then(response => response.json())
             .then(indicadores => {
                 let listadoIndicadores = [];
@@ -108,7 +108,7 @@ class Indicadores extends React.Component {
 
     obtenerIndicadorPorTipo() {
         Moment.locale('es');
-            fetch('http://localhost:5000/api/indicador/' + this.state.porIndicador.llaveSeleccionada)
+            fetch('http://localhost:5001/api/indicador/' + this.state.porIndicador.llaveSeleccionada)
                 .then(response => response.json())
                 .then(indicadores => {
                     let listadoValores = [];
@@ -156,7 +156,7 @@ class Indicadores extends React.Component {
     obtenerDetalleIndicadorPorFecha() {
         Moment.locale('es');
         
-            fetch('http://localhost:5000/api/indicador/' + this.state.porIndicador.llaveSeleccionada + '?fecha=' 
+            fetch('http://localhost:5001/api/indicador/' + this.state.porIndicador.llaveSeleccionada + '?fecha=' 
                 + this.state.detalleIndicador.fechaSeleccionada)
                 .then(response => response.json())
                 .then(indicador => {
