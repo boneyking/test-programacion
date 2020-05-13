@@ -55,7 +55,7 @@ class Indicadores extends React.Component {
                 this.obtenerIndicadorPorTipo();
         }
 
-        if (this.state.detalleIndicador.fechaSeleccionada !== ''){
+        if (this.state.detalleIndicador.fechaSeleccionada !== '' && !this.state.seCargoDetalle){
             this.obtenerDetalleIndicadorPorFecha();
         }
     }
@@ -155,11 +155,27 @@ class Indicadores extends React.Component {
 
     obtenerDetalleIndicadorPorFecha() {
         Moment.locale('es');
+        
             fetch('http://localhost:5000/api/indicador/' + this.state.porIndicador.llaveSeleccionada + '?fecha=' 
                 + this.state.detalleIndicador.fechaSeleccionada)
                 .then(response => response.json())
                 .then(indicador => {
-                    console.log('indicador', indicador);
+                    console.log('valor', indicador.value);
+                    this.setState({
+                        seCargoDetalle: true,
+                        detalleIndicador: {
+                            fechaSeleccionada: this.state.detalleIndicador.fechaSeleccionada,
+                            indicador: {
+                                llave: indicador.key,
+                                nombre: indicador.key,
+                                fecha: Moment(Number(indicador.date)).format('DD-MM-yyyy'),
+                                descripcion: indicador.name,
+                                unidad: indicador.unit,
+                                valor: indicador.value,
+                                mensajeDetalle: ''
+                            }
+                        }
+                    })
                 },
                 (error) => {
                     
@@ -167,6 +183,7 @@ class Indicadores extends React.Component {
     }
 
     clicPagina = async (event) => {
+        debugger;
         this.setState({
             paginaActual: Number(event.target.id)           
         });
@@ -176,10 +193,14 @@ class Indicadores extends React.Component {
         if (nombreIndicador !== this.state.porIndicador.llaveSeleccionada) {
             this.setState({
                 seCargoDataGrafico: false,
+                seCargoDetalle: false,
                 porIndicador: {
                     llaveSeleccionada: nombreIndicador,
                     valores: [],
                     llaveAnterior: this.state.porIndicador.llaveAnterior
+                },
+                detalleIndicador: {
+                    fechaSeleccionada: ''
                 }
             });
         }        
@@ -188,6 +209,7 @@ class Indicadores extends React.Component {
     seleccionFecha = async (fecha) => {
         if (fecha !== this.state.detalleIndicador.fechaSeleccionada){
             this.setState({
+                seCargoDetalle: false,
                 detalleIndicador: {
                     fechaSeleccionada: fecha,
                     indicador: {
@@ -272,7 +294,7 @@ class Indicadores extends React.Component {
                 <li
                     key={numero}
                     id={numero}
-                    onClick={this.clickPagina}
+                    onClick={this.clicPagina}
                     className={(this.state.paginaActual === numero) ? 'pagina-activa' : 'pagina-inactiva'}
                 >
                     {numero}
@@ -305,12 +327,16 @@ class Indicadores extends React.Component {
                         </LineChart>
                     </div>
                     <div className="row">
-                        <div className="col-12">
-                        <DatePicker 
-                            selected={this.state.fechaSeleccionada}
-                            onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
-                            dateFormat="dd-MM-yyyy"
-                            maxDate={new Date()} />
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon3">Seleccione una fecha</span>
+                            </div>
+                            <DatePicker 
+                                selected={this.state.fechaSeleccionada}
+                                onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
+                                dateFormat="dd-MM-yyyy"
+                                className="form-control"
+                                maxDate={new Date()} />
                         </div>
                     </div>
                 </div>
@@ -320,7 +346,7 @@ class Indicadores extends React.Component {
             <div className="col-sm-12 col-lg-12 col-xl-12">
                 {
                     !this.state.seCargoDataGrafico &&
-                    <span>Cargando...</span>
+                    <span>Cargando gráfico...</span>
                 }
 
                 {
@@ -331,14 +357,35 @@ class Indicadores extends React.Component {
     }
 
     renderDetalleIndicador() {
-        if (this.state.seCargoDetalle !== ''){
-            return <div>a</div>;
+        if (this.state.seCargoDetalle) {
+            debugger;
+            if (this.state.detalleIndicador.indicador.valor !== null) {
+                return (
+                <div className="col-sm-12 col-lg-12 col-xl-12">
+                    <label></label>
+                    <div className="card ancho-maximo">
+                        <h5 className="card-header">{this.state.detalleIndicador.indicador.nombre} <span className="float-right">{this.state.detalleIndicador.fechaSeleccionada}</span></h5>
+                        <div className="card-body">
+                            <h6 className="card-title">
+                                {this.state.detalleIndicador.indicador.descripcion}
+                            </h6>
+                            <p className="card-text">
+                                {this.tipoUnidad(this.state.detalleIndicador.indicador.unidad, this.state.detalleIndicador.indicador.valor)}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                );    
+            }
+            return <div className="col-sm-12 col-lg-12 col-xl-12">
+            No existe información para el {this.state.detalleIndicador.fechaSeleccionada}
+            </div>;
         }
         return (
             <div className="col-sm-12 col-lg-12 col-xl-12">
                 {
                     !this.state.seCargoDetalle &&
-                    <span>Cargando...</span>
+                    <span>Cargando detalle...</span>
                 }
 
                 {
@@ -354,7 +401,7 @@ class Indicadores extends React.Component {
         if (!this.state.seCargaronIndicadores) {
             return (
                 <div className="col-12">
-                    <h1>Cargando Indicadores</h1>
+                    Cargando Indicadores...
                 </div>
             );
         }
