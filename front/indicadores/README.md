@@ -1,4 +1,4 @@
-## Para ejecutar el proyecto, abrir una consola en directorio del front y ejecutar 
+Para ejecutar el proyecto, abrir una consola en directorio del front/indicadores y ejecutar 
 
 ### `npm start`
 
