@@ -3,7 +3,7 @@ import Moment from 'moment';
 import CurrencyFormat from 'react-currency-format';
 import './indicadores.css';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
   } from 'recharts';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -320,40 +320,44 @@ class Indicadores extends React.Component {
                 <div className="col-sm-12 col-lg-12 col-xl-12">
                     <div className="card border-dark mb-3 App-width">
                         <div className="card-header">
-                            <h1>{this.state.porIndicador.llaveSeleccionada}</h1>
-                            <h2>{this.state.porIndicador.mensajePorIndicador}</h2>
+                            <h5>{this.state.porIndicador.llaveSeleccionada.toUpperCase()}</h5>
+                            <h6>{this.state.porIndicador.mensajePorIndicador}</h6>
                         </div>
                         <div className="card-body text-dark">
                             <div className="row">
+                            <ResponsiveContainer width="99%" height={300}>
                                 <LineChart
-                                    width={500}
-                                    height={300}
+                                    aspect={3}
+                                    height={200}
                                     data={this.state.porIndicador.valores}
                                     margin={{
                                     top: 5, right: 30, left: 20, bottom: 5,
                                     }}
                                 >
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="fecha" />
+                                    <XAxis hide={true} />
                                     <YAxis />
                                     <Tooltip />
                                     <Legend />
                                     <Line type="monotone" dataKey="valor" stroke="#8884d8" activeDot={{ r: 8 }} />
                                 </LineChart>
+                            </ResponsiveContainer>
                             </div>
                             <div className="row">
-                                <div className="input-group mb-3">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text" id="basic-addon3">Fecha de detalle</span>
+                                <div className="col-12">
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text" id="basic-addon3">Fecha de detalle</span>
+                                        </div>
+                                        <DatePicker 
+                                            selected={this.state.fechaSeleccionada}
+                                            onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
+                                            dateFormat="dd-MM-yyyy"
+                                            className="form-control"
+                                            placeholderText="Indique una fecha"
+                                            maxDate={new Date()} />
                                     </div>
-                                    <DatePicker 
-                                        selected={this.state.fechaSeleccionada}
-                                        onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
-                                        dateFormat="dd-MM-yyyy"
-                                        className="form-control"
-                                        placeholderText="Indique una fecha"
-                                        maxDate={new Date()} />
-                                </div>
+                                </div>                                
                             </div>
                             {
                                 this.state.detalleIndicador.fechaSeleccionada !== '' &&
@@ -385,17 +389,13 @@ class Indicadores extends React.Component {
             if (this.state.detalleIndicador.indicador.valor !== null) {
                 return (
                 <div className="col-sm-12 col-lg-12 col-xl-12">
-                    <label></label>
-                    <div className="card ancho-maximo">
-                        <h5 className="card-header">{this.state.detalleIndicador.indicador.nombre} <span className="float-right">{this.state.detalleIndicador.fechaSeleccionada}</span></h5>
-                        <div className="card-body">
-                            <h6 className="card-title">
-                                {this.state.detalleIndicador.indicador.descripcion}
-                            </h6>
-                            <p className="card-text">
-                                {this.tipoUnidad(this.state.detalleIndicador.indicador.unidad, this.state.detalleIndicador.indicador.valor)}
-                            </p>
-                        </div>
+                     <div className="alert alert-dark">
+                        <p className="fuente-negrita">
+                            {this.state.detalleIndicador.indicador.nombre.toUpperCase()} al {this.state.detalleIndicador.fechaSeleccionada}
+                        </p>
+                        <p>
+                            {this.tipoUnidad(this.state.detalleIndicador.indicador.unidad, this.state.detalleIndicador.indicador.valor)} 
+                        </p>
                     </div>
                 </div>
                 );    
