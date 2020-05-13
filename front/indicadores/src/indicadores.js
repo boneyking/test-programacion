@@ -154,8 +154,7 @@ class Indicadores extends React.Component {
     }
 
     obtenerDetalleIndicadorPorFecha() {
-        Moment.locale('es');
-        
+        Moment.locale('es');        
             fetch('http://localhost:5001/api/indicador/' + this.state.porIndicador.llaveSeleccionada + '?fecha=' 
                 + this.state.detalleIndicador.fechaSeleccionada)
                 .then(response => response.json())
@@ -178,7 +177,21 @@ class Indicadores extends React.Component {
                     })
                 },
                 (error) => {
-                    
+                    this.setState({
+                        seCargoDetalle: false,
+                        detalleIndicador: {
+                            fechaSeleccionada: this.state.detalleIndicador.fechaSeleccionada,
+                            indicador: {
+                                llave: '',
+                                nombre: '',
+                                fecha: '',
+                                descripcion: '',
+                                unidad: '',
+                                valor: '',
+                                mensajeDetalle: error
+                            }
+                        }
+                    })
                 });
     }
 
@@ -306,37 +319,49 @@ class Indicadores extends React.Component {
         if(this.state.seCargoDataGrafico){
             return (
                 <div className="col-sm-12 col-lg-12 col-xl-12">
-                    <h1>{this.state.porIndicador.llaveSeleccionada}</h1>
-                    <h2>{this.state.porIndicador.mensajePorIndicador}</h2>
-                    <div className="row">
-                        <LineChart
-                            width={500}
-                            height={300}
-                            data={this.state.porIndicador.valores}
-                            margin={{
-                            top: 5, right: 30, left: 20, bottom: 5,
-                            }}
-                        >
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="fecha" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <Line type="monotone" dataKey="valor" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        </LineChart>
-                    </div>
-                    <div className="row">
-                        <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">Fecha de detalle</span>
+                    <div className="card border-dark mb-3 App-width">
+                        <div className="card-header">
+                            <h1>{this.state.porIndicador.llaveSeleccionada}</h1>
+                            <h2>{this.state.porIndicador.mensajePorIndicador}</h2>
+                        </div>
+                        <div className="card-body text-dark">
+                            <div className="row">
+                                <LineChart
+                                    width={500}
+                                    height={300}
+                                    data={this.state.porIndicador.valores}
+                                    margin={{
+                                    top: 5, right: 30, left: 20, bottom: 5,
+                                    }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="fecha" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line type="monotone" dataKey="valor" stroke="#8884d8" activeDot={{ r: 8 }} />
+                                </LineChart>
                             </div>
-                            <DatePicker 
-                                selected={this.state.fechaSeleccionada}
-                                onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
-                                dateFormat="dd-MM-yyyy"
-                                className="form-control"
-                                placeholderText="Indique una fecha"
-                                maxDate={new Date()} />
+                            <div className="row">
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text" id="basic-addon3">Fecha de detalle</span>
+                                    </div>
+                                    <DatePicker 
+                                        selected={this.state.fechaSeleccionada}
+                                        onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
+                                        dateFormat="dd-MM-yyyy"
+                                        className="form-control"
+                                        placeholderText="Indique una fecha"
+                                        maxDate={new Date()} />
+                                </div>
+                            </div>
+                            {
+                                this.state.detalleIndicador.fechaSeleccionada !== '' &&
+                                <div className="row">
+                                    {this.renderDetalleIndicador()}
+                                </div>
+                            }                            
                         </div>
                     </div>
                 </div>
@@ -396,9 +421,7 @@ class Indicadores extends React.Component {
                 }
             </div>
         );  
-        
-    }
-    
+    }    
 
     render() {
         if (!this.state.seCargaronIndicadores) {
@@ -417,18 +440,11 @@ class Indicadores extends React.Component {
                         this.state.porIndicador.llaveSeleccionada !== '' &&
                         this.renderGraficoIndicador()           
                     }
-                    {
-                        this.state.detalleIndicador.fechaSeleccionada !== '' &&
-                        this.renderDetalleIndicador()
-                    }
                 </div>
             </div>
             </>
         );
     }
-
 }
-
-
 
 export default Indicadores;

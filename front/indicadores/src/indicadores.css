@@ -16,8 +16,9 @@
   }
   
   .pagina-activa {
-    background-color: black;
-    color: white;
+    background-color: #007BFF;
+    color: black;
+    font-weight: bold;
     cursor: pointer;
   }
   .pagina-inactiva {
