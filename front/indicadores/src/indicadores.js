@@ -262,7 +262,6 @@ class Indicadores extends React.Component {
             <ul className="list-group">
                 <li className="list-group-item d-flex justify-content-between align-items-center">
                     <h3>{this.state.ultimosIndicadores.mensajeUltimosIndicadores}</h3>
-                    <span className="badge badge-pill badge-primary">{this.state.paginaActual}</span>
                 </li>
                 {this.crearListadoIndicadores()}
             </ul>
