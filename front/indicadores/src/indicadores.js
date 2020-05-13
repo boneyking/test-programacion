@@ -183,7 +183,6 @@ class Indicadores extends React.Component {
     }
 
     clicPagina = async (event) => {
-        debugger;
         this.setState({
             paginaActual: Number(event.target.id)           
         });
@@ -329,13 +328,14 @@ class Indicadores extends React.Component {
                     <div className="row">
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <span className="input-group-text" id="basic-addon3">Seleccione una fecha</span>
+                                <span className="input-group-text" id="basic-addon3">Fecha de detalle</span>
                             </div>
                             <DatePicker 
                                 selected={this.state.fechaSeleccionada}
                                 onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
                                 dateFormat="dd-MM-yyyy"
                                 className="form-control"
+                                placeholderText="Indique una fecha"
                                 maxDate={new Date()} />
                         </div>
                     </div>
@@ -358,7 +358,6 @@ class Indicadores extends React.Component {
 
     renderDetalleIndicador() {
         if (this.state.seCargoDetalle) {
-            debugger;
             if (this.state.detalleIndicador.indicador.valor !== null) {
                 return (
                 <div className="col-sm-12 col-lg-12 col-xl-12">
@@ -377,9 +376,13 @@ class Indicadores extends React.Component {
                 </div>
                 );    
             }
-            return <div className="col-sm-12 col-lg-12 col-xl-12">
-            No existe información para el {this.state.detalleIndicador.fechaSeleccionada}
-            </div>;
+            return (
+                <div className="col-sm-12 col-lg-12 col-xl-12">
+                    <div className="alert alert-warning">
+                        No existe información para el {this.state.detalleIndicador.fechaSeleccionada}
+                    </div>                    
+                </div>
+                );
         }
         return (
             <div className="col-sm-12 col-lg-12 col-xl-12">
