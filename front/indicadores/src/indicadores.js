@@ -314,11 +314,24 @@ class Indicadores extends React.Component {
         });
     }
 
+
     renderGraficoIndicador() {
         if(this.state.seCargoDataGrafico){
+
+            const tooltipValor = ({ active, payload, label }) => {
+                if (active) {
+                  return (
+                    <div className="alert alert-dark">
+                      Valor: {payload[0].value}
+                    </div>
+                  );
+                }              
+                return null;
+              };
+
             return (
                 <div className="col-sm-12 col-lg-12 col-xl-12">
-                    <div className="card border-dark mb-3 App-width">
+                    <div className="card mb-3 App-width">
                         <div className="card-header">
                             <h5>{this.state.porIndicador.llaveSeleccionada.toUpperCase()}</h5>
                             <h6>{this.state.porIndicador.mensajePorIndicador}</h6>
@@ -337,15 +350,15 @@ class Indicadores extends React.Component {
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis hide={true} />
                                     <YAxis />
-                                    <Tooltip />
+                                    <Tooltip content={tooltipValor}  />
                                     <Legend />
                                     <Line type="monotone" dataKey="valor" stroke="#8884d8" activeDot={{ r: 8 }} />
                                 </LineChart>
                             </ResponsiveContainer>
                             </div>
                             <div className="row">
-                                <div className="col-12">
-                                    <div className="input-group mb-3">
+                                <div className="col-sm-12 col-lg-12 col-xl-12">
+                                    <div className="input-group">
                                         <div className="input-group-prepend">
                                             <span className="input-group-text" id="basic-addon3">Fecha de detalle</span>
                                         </div>
