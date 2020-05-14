@@ -13,3 +13,5 @@ Cada una de las instrucciones para probar los proyectos se encuentran en:
 - [Back](./back/README.md)
 - [Front](./front/indicadores/README.md)
 
+
+#### Todo fue realizado bajo windows 10.
