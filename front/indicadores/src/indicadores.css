@@ -2,33 +2,18 @@
     width: 100%;
   }
   
-  #page-numbers {
-    list-style: none;
-    display: flex;
-  }
-  
-  #page-numbers > li {
-    color: blue;
-    user-select: none;
-    cursor: pointer;
-    border: solid 1px #417698;
-    padding: 0.3em;
-  }
-  
-  .pagina-activa {
-    background-color: #007BFF;
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .pagina-inactiva {
-    color: blue;
-    user-select: none;
-    cursor: pointer;
-    border: solid 1px #417698;
-    padding: 0.3em;
-  }
+.activo {
+  font-weight: bold;
+  cursor: pointer !important;
+  background-color: #007BFF !important;
+  color: white !important;
+}
+
+.inactivo {
+  cursor: pointer !important;
+}
   
   .fuente-negrita {
     font-weight: bold;
   }
+  

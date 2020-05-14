@@ -265,9 +265,14 @@ class Indicadores extends React.Component {
                 </li>
                 {this.crearListadoIndicadores()}
             </ul>
-            <ul id="page-numbers">
-                {this.crearPaginacion()}
-            </ul>
+            {/* <ul id="pagination">
+                
+            </ul> */}
+            <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                    {this.crearPaginacion()}
+                </ul>
+            </nav>
         </div>
         )
     }
@@ -306,9 +311,8 @@ class Indicadores extends React.Component {
                     key={numero}
                     id={numero}
                     onClick={this.clicPagina}
-                    className={(this.state.paginaActual === numero) ? 'pagina-activa' : 'pagina-inactiva'}
-                >
-                    {numero}
+                    className={(this.state.paginaActual === numero) ? 'page-link activo' : 'page-link inactivo'}>
+                        {numero}
                 </li>
             );
         });
@@ -317,7 +321,6 @@ class Indicadores extends React.Component {
 
     renderGraficoIndicador() {
         if(this.state.seCargoDataGrafico){
-
             const tooltipValor = ({ active, payload, label }) => {
                 if (active) {
                   return (
