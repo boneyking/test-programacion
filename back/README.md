@@ -7,4 +7,5 @@
         - http://localhost:5001/api/ultimosIndicadores
         - http://localhost:5001/api/indicador/<nombre_indicador> Donde nombre_indicador corresponde al indicador a buscar, por ejemplo "cobre".
         - http://localhost:5001/api/indicador/<nombre_indicador>?fecha=<fecha> Donde "nombre_indicador" corresponde al indicador a buscar, por ejemplo "cobre" y "fecha" a la fecha a consultar en formato DD-MM-YYYY.
-        - Para ejecutar la prueba unitaria ejecutar siguiente comando: py -m unittest discover ./test   Despues indicar la fecha a consultar. Esto se configuro para buscar por el indicador "cobre"
+        - Para la prueba unitaria ejecutar siguiente comando: py -m unittest discover ./test   
+        Despues indicar la fecha a consultar. Esto se configuro para buscar por el indicador "cobre"

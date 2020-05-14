@@ -1,5 +1,9 @@
 Para ejecutar el proyecto, abrir una consola en directorio del front/indicadores y ejecutar 
 
+### `npm install`
+Con esto se instalaran las dependencias que utiliza el proyecto.
+
+Posteriormente, ejecutar el comando:
 ### `npm start`
 
 Esto levantará una instancia local en el puerto 3000.<br />

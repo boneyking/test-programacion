@@ -2,8 +2,14 @@
 
 Este test contempla dos partes, frontend y backend.
 
-El frontend fue realizado con reactjs, mientras que el backend con python utilizando flask para generar una api.
+## Backend
+El Backend fue realizado con python version 3.8.2 y Flask para poder crear la api que consumirá el frontend.
 
-Las instrucciones para probar los proyectos estan en:
-- [Front](./front/indicadores/README.md)
+## Frontend
+El Frontend fue realizado con reactjs.
+
+## Instrucciones de uso:
+Cada una de las instrucciones para probar los proyectos se encuentran en:
 - [Back](./back/README.md)
+- [Front](./front/indicadores/README.md)
+
