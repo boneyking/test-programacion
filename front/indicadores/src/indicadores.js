@@ -449,7 +449,7 @@ class Indicadores extends React.Component {
             }
             return (
                 <div className="col-sm-12 col-lg-12 col-xl-12">
-                    <div className="alert alert-warning">
+                    <div className="alert alert-warning text-center">
                         No existe informacion para el {this.state.detalleIndicador.fechaSeleccionada}
                     </div>                    
                 </div>
