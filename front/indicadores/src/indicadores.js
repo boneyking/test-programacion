@@ -259,22 +259,25 @@ class Indicadores extends React.Component {
     renderUltimosIndicadores() {
         return (
         <div className="col-sm-12 col-lg-4 col-xl-4">
-            <ul className="list-group">
+            <ul className="list-group" id="listado-indicadores-grande">
                 <li className="list-group-item d-flex justify-content-between align-items-center">
                     <h3>{this.state.ultimosIndicadores.mensajeUltimosIndicadores}</h3>
                 </li>
                 {this.crearListadoIndicadores()}
             </ul>
-            {/* <ul id="pagination">
-                
-            </ul> */}
+            <ul className="list-group" id="listado-indicadores-chico">
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                    <h5>{this.state.ultimosIndicadores.mensajeUltimosIndicadores}</h5>
+                </li>
+                {this.crearListadoIndicadoresChico()}
+            </ul>
             <nav aria-label="Page navigation example">
                 <ul className="pagination">
                     {this.crearPaginacion()}
                 </ul>
             </nav>
         </div>
-        )
+        );
     }
 
     crearListadoIndicadores() {
@@ -296,6 +299,22 @@ class Indicadores extends React.Component {
                 </div>
             </div>
         </li>
+        });
+    }
+
+    crearListadoIndicadoresChico() {
+        const indicePagina = this.state.paginaActual * this.state.ultimosIndicadores.cantidadPorPagina;
+        const indiceInicial = indicePagina - this.state.ultimosIndicadores.cantidadPorPagina;
+        const todos = this.state.ultimosIndicadores.indicadores.slice(indiceInicial, indicePagina);
+
+        return todos.map((indicador, index) => {
+            return (
+            <li key={indicador.llave} className="list-group-item d-flex justify-content-between align-items-center">
+                {indicador.nombre.toUpperCase()}
+                <button type="button" className="btn btn-outline-primary btn-sm" 
+                        onClick={() => this.clicIndicador(indicador.llave)}>Ver grafico</button>
+            </li>
+            );
         });
     }
 
@@ -361,9 +380,21 @@ class Indicadores extends React.Component {
                             </div>
                             <div className="row">
                                 <div className="col-sm-12 col-lg-12 col-xl-12">
-                                    <div className="input-group">
+                                    <div className="input-group" id="fecha-detalle-grande">
                                         <div className="input-group-prepend">
                                             <span className="input-group-text" id="basic-addon3">Fecha de detalle</span>
+                                        </div>
+                                        <DatePicker 
+                                            selected={this.state.fechaSeleccionada}
+                                            onChange={(date) => this.seleccionFecha(Moment(date).format('DD-MM-yyyy'))}
+                                            dateFormat="dd-MM-yyyy"
+                                            className="form-control"
+                                            placeholderText="Indique una fecha"
+                                            maxDate={new Date()} />
+                                    </div>
+                                    <div className="input-group" id="fecha-detalle-chico">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text" id="basic-addon3">Detalle</span>
                                         </div>
                                         <DatePicker 
                                             selected={this.state.fechaSeleccionada}

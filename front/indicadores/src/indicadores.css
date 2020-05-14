@@ -1,19 +1,43 @@
 .ancho-maximo {
-    width: 100%;
-  }
-  
+  width: 100%;
+}
+
 .activo {
   font-weight: bold;
   cursor: pointer !important;
-  background-color: #007BFF !important;
+  background-color: #007bff !important;
   color: white !important;
 }
 
 .inactivo {
   cursor: pointer !important;
 }
-  
-  .fuente-negrita {
-    font-weight: bold;
+
+.fuente-negrita {
+  font-weight: bold;
+}
+
+#listado-indicadores-chico {
+  display: none;
+}
+
+#fecha-detalle-chico {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  #listado-indicadores-grande {
+    display: none;
   }
-  
+  #listado-indicadores-chico {
+    display: block;
+  }
+
+  #fecha-detalle-grande {
+    display: none;
+  }
+
+  #fecha-detalle-chico {
+    display: block;
+  }
+}
