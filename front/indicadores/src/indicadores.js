@@ -8,6 +8,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
 class Indicadores extends React.Component {
 
     dataUltimosIndicadores;
@@ -19,6 +20,7 @@ class Indicadores extends React.Component {
             seCargoDataGrafico: false,
             seCargoDetalle: false,
             paginaActual: 1,
+            fechaSeleccionada: '',
             ultimosIndicadores: {
                 indicadores: [],                
                 cantidadPorPagina: 2,
